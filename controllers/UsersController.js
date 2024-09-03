@@ -6,15 +6,15 @@ class UsersController {
     const { email, password} = req.body;
 
     if (!email) {
-      return res.status(400).json({ error: 'Misssing email' });
+      return res.status(400).send({ error: 'Misssing email' });
     }
     if (!password) {
-      return res.status(400).json({ error: 'Missing password' });
+      return res.status(400).send({ error: 'Missing password' });
     }
     try {
       const existingUser = await dbClient.userColle.findOne({ email });
       if (existingUser) {
-        return res.status(400).json({ error: 'Already exist' });
+        return res.status(400).send({ error: 'Already exist' });
       }
 
       const  hashedpasswd = crypto.createHash('sha1').update(password).digest('hex');
