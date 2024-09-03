@@ -1,18 +1,18 @@
 import express from 'express';
 import AppController from '../controllers/AppController'; 
 
-const router = express.Router();
+const controllerRouting = (app) => {
+  const router = express.Router();
 
-router.get('/status', (req, res) => {
-  AppController.getStatus(req, res);
-});
+  app.use('/', router);
 
-router.get('/stats', (req, res) => {
-  AppController.getStats(req, res);
-});
+  router.get('/status', (req, res) => {
+    AppController.getStatus(req, res);
+  })
 
-router.post('/users', (req, res) => {
-  UsersController.postNew(req, res);
-});
+  router.get('/stats', (req, res) => {
+    AppController.getStats(req, res);
+  })
+}
 
-export default router;
+export default controllerRouting;
