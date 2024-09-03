@@ -1,3 +1,4 @@
+import connect from 'mongodb';
 import { createClient } from 'redis';
 
 class RedisClient {
@@ -7,10 +8,6 @@ class RedisClient {
     this.client.on('error', (err) => {
       console.error('Redis client Error:', err)
     });
-
-    this.client.connect().catch((err) => {
-      console.error('Failed to connect', err);
-    });
   }
 
   isAlive() {
@@ -19,7 +16,7 @@ class RedisClient {
 
   async get(key) {
     if (!this.isAlive()) {
-        await this.client.connect();
+        await this.client.connect;
       }
     try {
       const val = await this.client.get(key);
@@ -32,7 +29,7 @@ class RedisClient {
 
   async set(key, value, duration) {
     if (!this.isAlive()) {
-      await this.client.connect();
+      await this.client.connect;
     }
     try {
       if (duration) {
@@ -48,7 +45,7 @@ class RedisClient {
 
   async del(key) {
     if (!this.isAlive()) {
-      await this.client.connect();
+      await this.client.connect;
     }
 
     try {
