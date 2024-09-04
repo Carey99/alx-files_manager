@@ -1,8 +1,8 @@
 import express from 'express';
 import AppController from '../controllers/AppController';
-import AppController from '../controllers/UsersController';
+import UsersController from '../controllers/UsersController';
 
-const controllerRouting = (app) => {
+function controllerRouting (app) {
   const router = express.Router();
 
   app.use('/', router);
