@@ -7,7 +7,6 @@ import userUtils from '../utils/user';
 const userQueue = new Queue('userQueue');
 
 class UsersController {
-
   static async postNew(request, response) {
     const { email, password } = request.body;
 
@@ -42,6 +41,21 @@ class UsersController {
     });
 
     return response.status(201).send(user);
+  }
+  static async getMe(request, response) {
+    const { userId } = await userUtils.getUserIdAndKey(request);
+
+    const user = await userUtils.getUser({
+      _id: ObjectId(userId),
+    });
+
+    if (!user) return response.status(401).send({ error: 'Unauthorized' });
+
+    const processedUser = { id: user._id, ...user };
+    delete processedUser._id;
+    delete processedUser.password;
+
+    return response.status(200).send(processedUser);
   }
 }
 
